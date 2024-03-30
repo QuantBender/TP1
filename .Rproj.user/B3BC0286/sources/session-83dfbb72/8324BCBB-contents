@@ -1,0 +1,907 @@
+---
+title: "Master of Science in quantitative and financial modeling ’Travaux Pratiques"
+author: "DOSSEH AMECK GUY-MAX DESIRE"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)  
+library(reticulate)  
+knitr::knit_engines$set(python = reticulate::eng_python) 
+```
+
+1. **[20 MARKS]** Find the LU-factorization of the following matrix **A** in $\mathbb{R}^{n\times n}$:
+
+$$
+A = \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+-1 & 2 & -1 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 & 2 & -1 \\
+0 & \dots & 0 & -1 & 2
+\end{bmatrix}
+$$
+
+
+The LU-factorization of the matrix **A** is given by:
+
+$$
+A = LU
+$$
+
+where **L** is a lower triangular matrix and **U** is an upper triangular matrix. The LU-factorization of the matrix **A** is explicitly obtained as follows:
+
+$$
+\begin{aligned}
+A = LU &\Leftrightarrow \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+-1 & 2 & -1 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 & 2 & -1 \\
+0 & \dots & 0 & -1 & 2
+\end{bmatrix} = \begin{bmatrix}
+1 & 0 & 0 & \dots & 0 \\
+l_{21} & 1 & 0 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & l_{n-1,n-2} & 1 & 0 \\
+0 & \dots & 0 & l_{n,n-1} & 1
+\end{bmatrix} \begin{bmatrix}
+u_{11} & u_{12} & 0 & \dots & 0 \\
+0 & u_{22} & u_{23} & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & 0 & u_{n-1,n-1} & u_{n-1,n} \\
+0 & \dots & 0 & 0 & u_{nn}
+\end{bmatrix} \\
+&\Leftrightarrow \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+-1 & 2 & -1 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 & 2 & -1 \\
+0 & \dots & 0 & -1 & 2
+\end{bmatrix} = \begin{bmatrix}
+u_{11} & u_{12} & 0 & \dots & 0 \\
+u_{11}l_{21} & u_{22} & u_{23} & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & u_{n-1,n-1}l_{n-1,n-2} & u_{n-1,n-1} & u_{n-1,n} \\
+0 & \dots & 0 & u_{n-1,n-1}l_{n,n-1} & u_{nn}
+\end{bmatrix} \\
+&\Leftrightarrow \begin{cases}
+u_{11} = 2 \\
+u_{12} = -1 \\
+u_{11}l_{21} = -1 \\
+u_{22} = 2 \\
+u_{23} = -1 \\
+u_{n-1,n-1}l_{n-1,n-2} = -1 \\
+u_{n-1,n-1} = 2 \\
+u_{n-1,n} = -1 \\
+u_{n-1,n-1}l_{n,n-1} = -1 \\
+u_{nn} = 2
+\end{cases} 
+\Leftrightarrow \begin{cases}
+u_{11} = 2 \\
+u_{12} = -1 \\
+l_{21} = -\frac{1}{2} \\
+u_{22} = 2 \\
+u_{23} = -1 \\
+l_{32} = -\frac{1}{2} \\
+u_{33} = 2 \\
+u_{34} = -1 \\
+l_{43} = -\frac{1}{2} \\
+u_{44} = 2 \\
+\vdots \\
+u_{n-1,n-1} = 2 \\
+u_{n-1,n} = -1 \\
+l_{n,n-1} = -\frac{1}{2} \\
+u_{nn} = 2
+\end{cases}\\
+& L = \begin{bmatrix}
+1 & 0 & 0 & \dots & 0 \\
+-\frac{1}{2} & 1 & 0 & \ddots & \vdots \\
+0 & -\frac{1}{2} & 1 & \ddots & 0 \\
+\vdots & \ddots & -\frac{1}{2} & 1 & 0 \\
+0 & \dots & 0 & -\frac{1}{2} & 1
+\end{bmatrix} \quad U = \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+0 & 2 & -1 & \ddots & \vdots \\
+0 & 0 & 2 & \ddots & 0 \\
+\vdots & \ddots & 0 & 2 & -1 \\
+0 & \dots & 0 & 0 & 2
+\end{bmatrix}
+\end{aligned}
+$$
+
+- **Is the matrix A positive definite, or is it positive semi-definite?**
+
+The matrix **A** is positive definite if and only if the following conditions are satisfied:
+
+1. The matrix **A** is symmetric.
+2. The eigenvalues of the matrix **A** are all positive.
+
+The matrix **A** is symmetric since it is a tridiagonal matrix. The eigenvalues of the matrix **A** are all positive since the matrix **A** is a tridiagonal matrix with all its diagonal elements being positive. Therefore, the matrix **A** is positive definite.
+
+- **Write a Python script to solve a linear system associated with the above matrix.**
+
+The Python script to solve a linear system associated with the matrix **A** is given as follows:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+import scipy.linalg
+import scipy 
+
+# Define the size
+n = 5
+
+# Define the matrix A
+A = np.diag(2 * np.ones(n)) - np.diag(np.ones(n - 1), -1) - np.diag(np.ones(n - 1), 1)
+
+# Define the right-hand side vector b to be a vector of ones
+b = np.ones(n)
+
+# LU-factorization of the matrix A
+P, L, U = scipy.linalg.lu(A)
+
+# Solve the linear system
+x = np.linalg.solve(U, np.linalg.solve(L, b))
+
+# Print the solution
+print("Solution to Ax = b: ", x)
+
+# Print the residual
+print("Residual: ", np.linalg.norm(A @ x - b))
+```
+
+2. **[20 MARKS]** Consider the following boundary value problem modeling the heat flow in
+a long pipe:
+
+$$
+\begin{cases}
+y^{''}(x)- p(x)y^{'}(x)-q(x)y(x) = r(x), \quad x\in [a,b] \\
+y(a) = \alpha, \quad y(b) = \beta
+\end{cases}
+$$
+
+**(a) Use a uniform discretization of the interval $[a, b]$ to derive the linear system corresponding to the model problem.**
+
+The linear system corresponding to the model problem is derived as follows:
+
+Let $a = x_0 < x_1 < \dots < x_{n+1} = b$ be a uniform discretization of the interval $[a, b]$. The step size $h$ is given by:
+
+$$
+h = \frac{b - a}{n+1}
+$$
+
+Derivative approximation at $x_{i}=a + ih, i=0, ..., n+1$ is given by:
+
+$$
+\begin{aligned}
+y^{'}(x_i) &\approx \frac{y(x_{i+1}) - y(x_{i-1})}{2h} \\
+           &\approx \frac{y_{i+1}-y_{i-1}}{2h}\\
+y^{''}(x_i) &\approx \frac{y^{'}(x_{i+1}) - y^{'}(x_{i-1})}{2h} \\
+            &\approx \frac{y_{i+1} - 2y_{i} + y_{i-1}}{h^2}
+\end{aligned}
+$$
+Inserting these approximations in the model problem, we get:
+
+$$
+\begin{aligned}
+\frac{y_{i+1} - 2y_{i} + y_{i-1}}{h^2} - p(x_i)\frac{y_{i+1}-y_{i-1}}{2h} - q(x_i)y_i &= r(x_i), 1\leq i \leq n \\
+\end{aligned}
+$$
+By multiplying by $h^2$, we obtain the following linear system:
+
+$$
+\begin{aligned}
+&\begin{bmatrix}
+2 + h^2q(x_1) & -1 + \frac{h}{2}p(x_1) & 0 & \dots & 0 \\
+-1 - \frac{h}{2}p(x_2) & 2 + h^2q(x_2) & -1 + \frac{h}{2}p(x_2) & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 - \frac{h}{2}p(x_{n-1}) & 2 + h^2q(x_{n-1}) & -1 + \frac{h}{2}p(x_{n-1}) \\
+0 & \dots & 0 & -1 - \frac{h}{2}p(x_n) & 2 + h^2q(x_n)
+\end{bmatrix} \begin{bmatrix}
+y_1 \\
+y_2 \\
+\cdots \\
+y_{n-1} \\
+y_n
+\end{bmatrix} = \begin{bmatrix}
+-h^2r(x_1) + \alpha(1 + \frac{h}{2}p(x_1)) \\
+-h^2r(x_2) \\
+\cdots \\
+-h^2r(x_{n-1}) \\
+-h^2r(x_n) + \beta(1 - \frac{h}{2}p(x_n))
+\end{bmatrix}
+\end{aligned}
+$$
+
+
+
+**(b) Solve the linear system using the Gaussian elimination method.**
+
+The linear system is solved using the Gaussian elimination method in python as follows to find the solution $y(x)$:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+
+# Define the size
+n = 5
+
+# Define the boundary values
+alpha = 0
+beta = 0
+
+# Define the functions p(x), q(x), and r(x)
+def p(x):
+    return 1
+  
+def q(x):
+    return 1
+  
+def r(x):
+    return 1
+  
+# Define the interval [a, b]
+a = 0
+b = 1
+
+# Define the step size
+h = (b - a) / (n + 1)
+
+# Define the x values
+x = np.linspace(a, b, n + 2)
+
+# Define the matrix A
+A = np.zeros((n, n))
+for i in range(n):
+    A[i, i] = 2 + h**2 * q(x[i + 1])
+    if i > 0:
+        A[i, i - 1] = -1 - h / 2 * p(x[i + 1])
+    if i < n - 1:
+        A[i, i + 1] = -1 + h / 2 * p(x[i + 1])
+        
+# Define the right-hand side vector b
+b = np.zeros(n)
+b[0] = -h**2 * r(x[1]) + alpha * (1 + h / 2 * p(x[1]))
+b[n - 1] = -h**2 * r(x[n]) + beta * (1 - h / 2 * p(x[n]))
+for i in range(1, n - 1):
+    b[i] = -h**2 * r(x[i + 1])
+    
+# Solve the linear system using the Gaussian elimination method
+y = np.linalg.solve(A, b)
+
+# Print the solution
+print("Solution to the linear system: ", y)
+
+# Print the residual
+print("Residual: ", np.linalg.norm(A @ y - b))
+```
+
+
+
+
+- **(c) Solve the linear system using QR-factorization.**
+
+The linear system is solved using the QR-factorization method in python as follows to find the solution $y(x)$:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+import scipy.linalg
+
+# Define the size
+n = 5
+
+# Define the boundary values
+alpha = 0
+beta = 0
+
+# Define the functions p(x), q(x), and r(x)
+def p(x):
+    return 1
+  
+def q(x):
+    return 1
+  
+def r(x):
+    return 1
+  
+# Define the interval [a, b]
+a = 0
+b = 1
+
+# Define the step size
+h = (b - a) / (n + 1)
+
+# Define the x values
+x = np.linspace(a, b, n + 2)
+
+# Define the matrix A
+A = np.zeros((n, n))
+
+for i in range(n):
+    A[i, i] = 2 + h**2 * q(x[i + 1])
+    if i > 0:
+        A[i, i - 1] = -1 - h / 2 * p(x[i + 1])
+    if i < n - 1:
+        A[i, i + 1] = -1 + h / 2 * p(x[i + 1])
+        
+# Define the right-hand side vector b
+b = np.zeros(n)
+b[0] = -h**2 * r(x[1]) + alpha * (1 + h / 2 * p(x[1]))
+b[n - 1] = -h**2 * r(x[n]) + beta * (1 - h / 2 * p(x[n]))
+for i in range(1, n - 1):
+    b[i] = -h**2 * r(x[i + 1])
+    
+# QR-factorization of the matrix A
+Q, R = np.linalg.qr(A)
+
+# Solve the linear system using the QR-factorization method
+y = np.linalg.solve(R, np.dot(Q.T, b))
+
+# Print the solution
+print("Solution to the linear system: ", y)
+
+# Print the residual
+print("Residual: ", np.linalg.norm(A @ y - b))
+```
+
+- **(d) Solve the linear system using the SVD-decomposition.**
+
+The linear system is solved using the SVD-decomposition method in python as follows to find the solution $y(x)$:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+import scipy.linalg
+
+# Define the size
+n = 5
+
+# Define the boundary values
+alpha = 0
+beta = 0
+
+# Define the functions p(x), q(x), and r(x)
+def p(x):
+    return 1
+  
+def q(x):
+    return 1
+  
+def r(x):
+    return 1
+  
+# Define the interval [a, b]
+a = 0
+b = 1
+
+# Define the step size
+h = (b - a) / (n + 1)
+
+# Define the x values
+x = np.linspace(a, b, n + 2)
+
+# Define the matrix A
+A = np.zeros((n, n))
+
+for i in range(n):
+    A[i, i] = 2 + h**2 * q(x[i + 1])
+    if i > 0:
+        A[i, i - 1] = -1 - h / 2 * p(x[i + 1])
+    if i < n - 1:
+        A[i, i + 1] = -1 + h / 2 * p(x[i + 1])
+        
+# Define the right-hand side vector b
+b = np.zeros(n)
+b[0] = -h**2 * r(x[1]) + alpha * (1 + h / 2 * p(x[1]))
+b[n - 1] = -h**2 * r(x[n]) + beta * (1 - h / 2 * p(x[n]))
+for i in range(1, n - 1):
+    b[i] = -h**2 * r(x[i + 1])
+    
+# SVD-decomposition of the matrix A
+U, S, V = np.linalg.svd(A)
+
+# Solve the linear system using the SVD-decomposition method
+y = np.dot(V.T, np.dot(np.diag(1 / S), np.dot(U.T, b)))
+
+# Print the solution
+print("Solution to the linear system: ", y)
+
+# Print the residual
+print("Residual: ", np.linalg.norm(A @ y - b))
+```
+
+- **(e) Compare the three methods**
+
+The three methods are compared in terms of accuracy and computational efficiency as follows:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+import scipy.linalg
+import timeit
+import pandas as pd
+
+# set  max number of columns to display in pandas dataframe
+pd.set_option('display.max_columns', 10)
+
+# Define the size
+n = 5
+
+# Define the boundary values
+alpha = 0
+beta = 0
+
+# Define the functions p(x), q(x), and r(x)
+def p(x):
+    return 1
+  
+def q(x):
+    return 1
+  
+def r(x):
+    return 1
+  
+# Define the interval [a, b]
+a = 0
+b = 1
+
+# Define the step size
+h = (b - a) / (n + 1)
+
+# Define the x values
+x = np.linspace(a, b, n + 2)
+
+# Define the matrix A
+A = np.zeros((n, n))
+
+for i in range(n):
+    A[i, i] = 2 + h**2 * q(x[i + 1])
+    if i > 0:
+        A[i, i - 1] = -1 - h / 2 * p(x[i + 1])
+    if i < n - 1:
+        A[i, i + 1] = -1 + h / 2 * p(x[i + 1])
+        
+# Define the right-hand side vector b
+b = np.zeros(n)
+
+b[0] = -h**2 * r(x[1]) + alpha * (1 + h / 2 * p(x[1]))
+
+b[n - 1] = -h**2 * r(x[n]) + beta * (1 - h / 2 * p(x[n]))
+
+for i in range(1, n - 1):
+    b[i] = -h**2 * r(x[i + 1])
+    
+# Gaussian elimination method
+y_gaussian = np.linalg.solve(A, b)
+
+# QR-factorization method
+def qr_factorization(A, b):
+    Q, R = np.linalg.qr(A)
+    return np.linalg.solve(R, np.dot(Q.T, b)), Q, R
+
+y_qr, Q, R = qr_factorization(A, b)
+
+# SVD-decomposition method
+def svd_decomposition(A, b):
+    U, S, V = np.linalg.svd(A)
+    return np.dot(V.T, np.dot(np.diag(1 / S), np.dot(U.T, b))), U, S, V
+
+y_svd, U, S, V = svd_decomposition(A, b)
+
+# solutions and residuals in dataframe
+
+data = {'Method': ['Gaussian elimination', 'QR-factorization', 'SVD-decomposition'],
+        'Solution y1': [y_gaussian[0], y_qr[0], y_svd[0]],
+        'Solution y2': [y_gaussian[1], y_qr[1], y_svd[1]],
+        'Solution y3': [y_gaussian[2], y_qr[2], y_svd[2]],
+        'Solution y4': [y_gaussian[3], y_qr[3], y_svd[3]],
+        'Solution y5': [y_gaussian[4], y_qr[4], y_svd[4]],
+        'Residual': [np.linalg.norm(A @ y_gaussian - b), np.linalg.norm(A @ y_qr - b), np.linalg.norm(A @ y_svd - b)],
+        'Time': [0, 0, 0],
+        'Memory': [0, 0, 0]}
+    
+    
+res_df = pd.DataFrame(data)
+
+res_df.loc[0, "Time"] = timeit.timeit(lambda: np.linalg.solve(A, b), number=1000)
+res_df.loc[1, "Time"] = timeit.timeit(lambda: qr_factorization(A, b), number=1000)
+res_df.loc[2, "Time"] = timeit.timeit(lambda: svd_decomposition(A, b), number=1000)
+
+res_df.loc[0, "Memory"] = A.nbytes + b.nbytes + y_gaussian.nbytes
+res_df.loc[1, "Memory"] = A.nbytes + b.nbytes + y_qr.nbytes + Q.nbytes + R.nbytes
+res_df.loc[2, "Memory"] = A.nbytes + b.nbytes + y_svd.nbytes + U.nbytes + S.nbytes + V.nbytes
+res_df.sort_values(by='Time', ascending=True)
+```
+
+- The Gaussian elimination method is the most accurate method, followed by the QR-factorization method, and then the SVD-decomposition method.
+
+- In matter of computational efficiency, the Gaussian elimination method is the most efficient, followed by the QR-factorization method, and then the SVD-decomposition method.
+
+- The Gaussian elimination method requires the least amount of memory, followed by the QR-factorization method, and then the SVD-decomposition method.
+
+
+3. **[20 MARKS]** Solve the problem of fitting a polynomial $p(x)=\sum_{i=0}^{d}c_{i}x^{i-1}$ of degree d to data points $(x_{i}, y_{i})$, $i=1, ..., m$, in the plane by the method of normal equations and QR decomposition. Choose the degree of the polynomial to be d=5 and then d=15, choose the interval $x\in [-1, 1]$, discretize it using $N=10$ or $N=20$ points.
+
+Such polynomial fitting leads to the equation $Ac = y$, where $A$ is the Vandermonde matrix, $c$ is the vector of coefficients, and $y$ is the vector of data points. The normal equations are given by:
+
+$$
+A^{T}Ac = A^{T}y
+$$
+
+The solution to the normal equations is given by:
+
+$$
+c = (A^{T}A)^{-1}A^{T}y
+$$
+  By using the QR decomposition, the matrix $A^{T}A$ is factorized as follows:     
+  
+$$
+A^{T}A = QR
+$$
+
+where $Q$ is an orthogonal matrix and $R$ is an upper triangular matrix. The solution to the normal equations is given by:
+
+$$
+c = R^{-1}Q^{T}A^{T}y
+$$
+
+The Python script to solve the problem of fitting a polynomial $p(x)=\sum_{i=0}^{d}c_{i}x^{i-1}$ of degree $d$ to data points $(x_{i}, y_{i})$, $i=1, ..., m$, in the plane by the method of normal equations and QR decomposition is given as follows:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+import pandas as pd
+import scipy.linalg
+import matplotlib.pyplot as plt
+
+def plot_polynomial_fit(m, d, ax):
+  # Define the degree of the polynomial
+  d = d
+  
+  # Define the number of data points
+  m = m
+  
+  # Define the interval [a, b]
+  a = -1
+  b = 1
+  
+  # Define the x values
+  x = np.linspace(a, b, m)
+  
+  # Define the data points y
+  y = np.sin((np.pi *x)/5) + x/5
+  
+  # Define the Vandermonde matrix A
+  A = np.vander(x, d + 1)
+  
+  # Solve the problem by the method of normal equations
+  c_normal = np.linalg.solve(A.T @ A, A.T @ y)
+  
+  # Solve the problem by the QR decomposition
+  Q, R = np.linalg.qr(A.T @ A)
+  c_qr = np.linalg.solve(R, np.dot(Q.T, A.T @ y))
+  
+  
+  # Plot the polynomial fitting
+  y_fit_normal = np.polyval(c_normal[::-1], x)
+  
+  y_fit_qr = np.polyval(c_qr[::-1], x)
+  
+  ax.plot(x, y, 'o', label='Data points')
+  ax.plot(x, y_fit_normal,'+', label='Normal equations')
+  ax.plot(x, y_fit_qr, '-', label='QR decomposition')
+  ax.set_xlabel('x')
+  ax.set_ylabel('y')
+  ax.set_title(f"d={d}, N={m}")
+  
+  # Compute the residual
+  residual_normal = np.linalg.norm(y_fit_normal - y)
+  residual_qr = np.linalg.norm(y_fit_qr - y)
+  
+  return residual_normal, residual_qr
+
+results_df = pd.DataFrame(columns=['Normal equations', 'QR decomposition'], index=[f"d={d}, N={m}" for d in [5, 15] for m in [10, 20]])
+
+fig, axes = plt.subplots(2, 2, figsize=(15, 8))
+
+for i, m in enumerate([10, 20]):
+  for j, d in enumerate([5, 15]):
+    residual_normal, residual_qr = plot_polynomial_fit(m, d, axes[i][j])
+    results_df.loc[f"d={d}, N={m}", 'Normal equations'] = residual_normal
+    results_df.loc[f"d={d}, N={m}", 'QR decomposition'] = residual_qr
+
+_ = plt.suptitle("Polynomial fitting by the method of normal equations and QR decomposition")
+plt.tight_layout()
+_ = plt.legend()
+plt.show()
+
+results_df
+```
+
+
+4. **[20 MARKS]** 
+
+- **(a) Explain how Singular Value Decomposition (SVD) can be applied to compress color images. Discuss the process in the context of an RGB image.**
+
+Singular Value Decomposition (SVD) can be applied to compress color images by decomposing the image into its singular values and vectors. In the context of an RGB image, the image is represented as a three-dimensional array with dimensions (height, width, 3), where the third dimension corresponds to the three color channels: red, green, and blue. The SVD is applied to each color channel separately, resulting in three sets of singular values and vectors.
+
+The SVD decomposition of each color channel is given by:
+
+$$
+A = U\Sigma V^{T}
+$$
+
+where $A$ is the matrix representing the color channel, $U$ is the matrix of left singular vectors, $\Sigma$ is the diagonal matrix of singular values, and $V^{T}$ is the matrix of right singular vectors. The image can be reconstructed using only the first $k$ singular values and vectors, resulting in a compressed version of the image.
+
+
+- **(b) Given a color image, implement an SVD-based compression algorithm in Python. Your implementation should:**
+
+    + Load a color image and separate it into R, G, and B channels.
+    + Apply SVD to each channel and reconstruct the image using only the first k singular values and vectors.
+    + Display the original and compressed images side by side for comparison, and compute the compression ratio.
+    
+
+The Python script to implement an SVD-based compression algorithm for a color image is given as follows:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+import wget
+
+def compress_image(image, k):
+    # Separate the image into R, G, and B channels
+    R, G, B = image[:, :, 0], image[:, :, 1], image[:, :, 2]
+    
+    # Apply SVD to each channel
+    UR, SR, VRt = np.linalg.svd(R, full_matrices=False)
+    UG, SG, VGt = np.linalg.svd(G, full_matrices=False)
+    UB, SB, VBt = np.linalg.svd(B, full_matrices=False)
+    
+    # Reconstruct the image using only the first k singular values and vectors
+    R_compressed = np.dot(UR[:, :k] * SR[:k], VRt[:k, :])
+    G_compressed = np.dot(UG[:, :k] * SG[:k], VGt[:k, :])
+    B_compressed = np.dot(UB[:, :k] * SB[:k], VBt[:k, :])
+    
+    # Combine the compressed channels into a single image
+    compressed_image = np.stack([R_compressed, G_compressed, B_compressed], axis=-1)
+    
+    return compressed_image
+  
+# download image 
+_=wget.download("https://s1.1zoom.me/big0/548/Fitness_Muesli_Alarm_clock_Tape_measure_Athletic_540894_1280x853.jpg",
+              out="image.jpg")
+
+# Load the color image
+image = cv2.imread('image.jpg')
+
+# Display the original image
+fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+
+_=axes[0].imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+_=axes[0].set_title('Original Image')
+_=axes[0].axis('off')
+
+# Compress the image using SVD
+k = 50
+compressed_image = compress_image(image, k)
+
+# Display the compressed image
+_=axes[1].imshow(cv2.cvtColor(compressed_image.astype(np.uint8), cv2.COLOR_BGR2RGB))
+_=axes[1].set_title(f'Compressed Image (k={k})')
+_=axes[1].axis('off')
+
+# Compute the compression ratio
+original_size = image.size
+compressed_size = k * (image.shape[0] + image.shape[1] + 1)
+compression_ratio = original_size / compressed_size
+
+print(f"Compression ratio: {compression_ratio}")
+
+plt.show()
+
+```
+
+
+
+    
+- **(c) Analyze the effect of varying the number of singular values (k) on the compression ratio and image quality. Use a specific color image for this analysis and provide visual and numerical results for at least three different values of k. Discuss the trade-off between compression ratio and image quality.**
+
+The effect of varying the number of singular values (k) on the compression ratio and image quality can be analyzed using the following Python script:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+def compress_image(image, k):
+    # Separate the image into R, G, and B channels
+    R, G, B = image[:, :, 0], image[:, :, 1], image[:, :, 2]
+    
+    # Apply SVD to each channel
+    UR, SR, VRt = np.linalg.svd(R, full_matrices=False)
+    UG, SG, VGt = np.linalg.svd(G, full_matrices=False)
+    UB, SB, VBt = np.linalg.svd(B, full_matrices=False)
+    
+    # Reconstruct the image using only the first k singular values and vectors
+    R_compressed = np.dot(UR[:, :k] * SR[:k], VRt[:k, :])
+    G_compressed = np.dot(UG[:, :k] * SG[:k], VGt[:k, :])
+    B_compressed = np.dot(UB[:, :k] * SB[:k], VBt[:k, :])
+    
+    # Combine the compressed channels into a single image
+    compressed_image = np.stack([R_compressed, G_compressed, B_compressed], axis=-1)
+    
+    return compressed_image
+  
+# Load the color image
+image = cv2.imread('image.jpg')
+
+# Display the original image
+fig, axes = plt.subplots(1, 5, figsize=(20, 5))
+
+_=axes[0].imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+_=axes[0].set_title('Original Image')
+_=axes[0].axis('off')
+
+# Compress the image using SVD for different values of k
+k_values = [10, 50, 100, 200]
+for i, k in enumerate(k_values):
+    compressed_image = compress_image(image, k)
+    _=axes[i + 1].imshow(cv2.cvtColor(compressed_image.astype(np.uint8), cv2.COLOR_BGR2RGB))
+    _=axes[i + 1].axis('off')
+    
+    # Compute the compression ratio
+    original_size = image.size
+    compressed_size = k * (image.shape[0] + image.shape[1] + 1)
+    compression_ratio = round(original_size / compressed_size, 2)
+    
+    _=axes[i + 1].set_title(f'k={k}, Ratio={compression_ratio}')
+    
+_=plt.tight_layout()
+_=plt.show()
+```
+
+
+- **Discuss the trade-off between compression ratio and image quality.**
+
+The trade-off between compression ratio and image quality is as follows:
+
+- As the number of singular values (k) used for compression increases, the image quality improves, as more information is retained in the compressed image. However, the compression ratio decreases, as more singular values are used to reconstruct the image, resulting in a larger file size. Therefore, there is a trade-off between compression ratio and image quality, where higher image quality comes at the cost of a lower compression ratio.
+
+5. **[20 MARKS]**
+
+**Data science or Financial engineering option**: Consider the heat equation,
+
+$$
+\frac{\partial u}{\partial t} = \alpha \left(\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2u}{\partial y^2} \right)
+$$
+
+Here, $u(x, y, t)$ represents the state variable (image intensity or option price), at spatial location $(x, y)$ and time $t$, with $\alpha$ as the diffusion coefficient. This equation can be used
+both in data science (image denoising) and financial engineering (option pricing). 
+
+*(a) Discretize the heat equation using the Finite Difference Method (FDM) for a 2D image grid.*
+
+The heat equation can be discretized using the Finite Difference Method (FDM) for a 2D image grid as follows:
+
+$$
+\frac{u_{i,j}^{n+1} - u_{i,j}^{n}}{\Delta t} = \alpha \left(\frac{u_{i+1,j}^{n} - 2u_{i,j}^{n} + u_{i-1,j}^{n}}{\Delta x^2} + \frac{u_{i,j+1}^{n} - 2u_{i,j}^{n} + u_{i,j-1}^{n}}{\Delta y^2} \right)
+$$
+
+where $u_{i,j}^{n}$ represents the state variable at spatial location $(i, j)$ and time step $n$, $\Delta t$ is the time step size, $\Delta x$ is the spatial step size in the $x$ direction, and $\Delta y$ is the spatial step size in the $y$ direction.
+
+The discretized equation can be rearranged to solve for $u_{i,j}^{n+1}$ as follows:
+
+$$
+u_{i,j}^{n+1} = u_{i,j}^{n} + \alpha \Delta t \left(\frac{u_{i+1,j}^{n} - 2u_{i,j}^{n} + u_{i-1,j}^{n}}{\Delta x^2} + \frac{u_{i,j+1}^{n} - 2u_{i,j}^{n} + u_{i,j-1}^{n}}{\Delta y^2} \right)
+$$
+
+The above equation represents the discrete update rule for the state variable $u_{i,j}$ at the next time step $n+1$ based on the values at the current time step $n$ and the neighboring grid points.
+
+
+*(b) Construct matrices for the discrete Laplacian operator. Discuss the use of the Kronecker product for this purpose.*
+
+The discrete Laplacian operator can be constructed using the Kronecker product as follows:
+
+The 1D discrete Laplacian operator for the $x$ direction can be represented as:
+
+$$
+L_x = \frac{1}{\Delta x^2} \begin{bmatrix}
+-2 & 1 & 0 & \dots & 0 \\
+1 & -2 & 1 & \ddots & \vdots \\
+0 & 1 & -2 & 1 & 0 \\
+\vdots & \ddots & 1 & -2 & 1 \\
+0 & \dots & 0 & 1 & -2
+\end{bmatrix}
+$$
+
+The 1D discrete Laplacian operator for the $y$ direction can be represented as:
+
+$$
+L_y = \frac{1}{\Delta y^2} \begin{bmatrix}
+-2 & 1 & 0 & \dots & 0 \\
+1 & -2 & 1 & \ddots & \vdots \\
+0 & 1 & -2 & 1 & 0 \\
+\vdots & \ddots & 1 & -2 & 1 \\
+0 & \dots & 0 & 1 & -2
+\end{bmatrix}
+$$
+
+The 2D discrete Laplacian operator can be constructed using the Kronecker product of $L_x$ and $L_y$ as follows:
+
+$$
+L = L_x \otimes I_y + I_x \otimes L_y
+$$
+
+where $I_x$ and $I_y$ are the identity matrices corresponding to the $x$ and $y$ directions, respectively. The Kronecker product allows us to construct the 2D discrete Laplacian operator by combining the 1D discrete Laplacian operators for the $x$ and $y$ directions.
+
+*Discussion*: The Kronecker product is used to construct the 2D discrete Laplacian operator by combining the 1D discrete Laplacian operators for the $x$ and $y$ directions. This approach simplifies the construction of the 2D Laplacian operator and allows for efficient computation of the discrete Laplacian in the 2D grid.
+
+*(c) Implement the code in Python, iterating over time steps using an explicit scheme.*
+
+The Python script to implement the heat equation using the Finite Difference Method (FDM) for a 2D image grid and iterating over time steps using an explicit scheme is given as follows:
+
+```{python, echo=FALSE, warning=FALSE, message=FALSE}
+import numpy as np
+import matplotlib.pyplot as plt
+
+def heat_equation_2d(image, alpha, dt, dx, dy, num_steps):
+    # Initialize the state variable
+    u = image.copy()
+    n = u.shape[0]
+    # Compute the Laplacian operator
+    L_x = np.diag(2 * np.ones(n)) + np.diag(np.ones(n - 1), -1) + np.diag(np.ones(n - 1), 1) / dx**2
+    L_y = np.diag(2 * np.ones(n)) + np.diag(np.ones(n - 1), -1) + np.diag(np.ones(n - 1), 1) / dy**2
+    I_x = np.eye(u.shape[0])
+    I_y = np.eye(u.shape[1])
+    L = np.kron(L_x, I_y) + np.kron(I_x, L_y)
+    
+    # Iterate over time steps
+    for _ in range(num_steps):
+        # Compute the Laplacian of the state variable
+        laplacian = np.dot(L, u.flatten())
+        
+        # Update the state variable using the explicit scheme
+        u += alpha * dt * laplacian.reshape(u.shape)
+        
+    return u
+  
+# Define the parameters
+alpha = 0.1
+dt = 0.01
+dx = 1
+dy = 1
+num_steps = 100
+
+# Create a random option price grid
+option_price = np.random.rand(10, 10)
+
+# Apply the heat equation
+result = heat_equation_2d(option_price, alpha, dt, dx, dy, num_steps)
+
+# Display the original and updated option price grids
+fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+
+_=axes[0].imshow(option_price, cmap='viridis')
+_=axes[0].set_title('Original Option Price Grid')
+_=axes[0].axis('off')
+
+# add annotation for each pixels
+for i in range(option_price.shape[0]):
+    for j in range(option_price.shape[1]):
+        _=axes[0].text(j, i, f"{option_price[i, j]:.2f}", ha='center', va='center', color='white')
+
+_=axes[1].imshow(result, cmap='viridis')
+_=axes[1].set_title('Updated Option Price Grid')
+_=axes[1].axis('off')
+
+# add annotation for each pixels
+for i in range(result.shape[0]):
+    for j in range(result.shape[1]):
+        _=axes[1].text(j, i, f"{result[i, j]:.2f}", ha='center', va='center', color='white')
+        
+        
+_=plt.suptitle("Heat Equation 2D")
+_=plt.show()
+```
+

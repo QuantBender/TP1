@@ -1,0 +1,434 @@
+---
+title: "Master of Science in quantitative and financial modeling ’Travaux Pratiques"
+author: "DOSSEH AMECK GUY-MAX DESIRE"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)  
+library(reticulate)  
+knitr::knit_engines$set(python = reticulate::eng_python) 
+```
+
+1. **[20 MARKS]** Find the LU-factorization of the following matrix **A** in $\mathbb{R}^{n\times n}$:
+
+$$
+A = \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+-1 & 2 & -1 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 & 2 & -1 \\
+0 & \dots & 0 & -1 & 2
+\end{bmatrix}
+$$
+
+
+The LU-factorization of the matrix **A** is given by:
+
+$$
+A = LU
+$$
+
+where **L** is a lower triangular matrix and **U** is an upper triangular matrix. The LU-factorization of the matrix **A** is explicitly obtained as follows:
+
+$$
+\begin{aligned}
+A = LU &\Leftrightarrow \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+-1 & 2 & -1 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 & 2 & -1 \\
+0 & \dots & 0 & -1 & 2
+\end{bmatrix} = \begin{bmatrix}
+1 & 0 & 0 & \dots & 0 \\
+l_{21} & 1 & 0 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & l_{n-1,n-2} & 1 & 0 \\
+0 & \dots & 0 & l_{n,n-1} & 1
+\end{bmatrix} \begin{bmatrix}
+u_{11} & u_{12} & 0 & \dots & 0 \\
+0 & u_{22} & u_{23} & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & 0 & u_{n-1,n-1} & u_{n-1,n} \\
+0 & \dots & 0 & 0 & u_{nn}
+\end{bmatrix} \\
+&\Leftrightarrow \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+-1 & 2 & -1 & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 & 2 & -1 \\
+0 & \dots & 0 & -1 & 2
+\end{bmatrix} = \begin{bmatrix}
+u_{11} & u_{12} & 0 & \dots & 0 \\
+u_{11}l_{21} & u_{22} & u_{23} & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & u_{n-1,n-1}l_{n-1,n-2} & u_{n-1,n-1} & u_{n-1,n} \\
+0 & \dots & 0 & u_{n-1,n-1}l_{n,n-1} & u_{nn}
+\end{bmatrix} \\
+&\Leftrightarrow \begin{cases}
+u_{11} = 2 \\
+u_{12} = -1 \\
+u_{11}l_{21} = -1 \\
+u_{22} = 2 + l_{21}l_{21} \\
+u_{23} = -1 \\
+u_{n-1,n-1}l_{n-1,n-2} = -1 \\
+u_{n-1,n-1} = 2 + l_{n-1,n-2}l_{n-1,n-2} \\
+u_{n-1,n} = -1 \\
+u_{n-1,n-1}l_{n,n-1} = -1 \\
+u_{nn} = 2 + l_{n,n-1}l_{n,n-1}
+\end{cases}\quad
+\Leftrightarrow \quad \begin{cases}
+u_{11} = 2 \\
+u_{12} = -1 \\
+l_{21} = -1/2 \\
+u_{22} = 2 + 1/4 \\
+u_{23} = -1 \\
+l_{32} = -1/2 \\
+u_{33} = 2 + 1/4 \\
+u_{34} = -1 \\
+l_{43} = -1/2 \\
+u_{44} = 2 + 1/4 \\
+\vdots \\
+l_{n-1,n-2} = -1/2 \\
+u_{n-1,n-1} = 2 + 1/4 \\
+u_{n-1,n} = -1 \\
+l_{n,n-1} = -1/2 \\
+u_{nn} = 2 + 1/4
+\end{cases} \quad
+\Leftrightarrow \quad \begin{cases}
+u_{11} = 2 \\
+u_{12} = -1 \\
+l_{21} = -1/2 \\
+u_{22} = 9/4 \\
+u_{23} = -1 \\
+l_{32} = -1/2 \\
+u_{33} = 9/4 \\
+u_{34} = -1 \\
+l_{43} = -1/2 \\
+u_{44} = 9/4 \\
+\vdots \\
+l_{n-1,n-2} = -1/2 \\
+u_{n-1,n-1} = 9/4 \\
+u_{n-1,n} = -1 \\
+l_{n,n-1} = -1/2 \\
+u_{nn} = 9/4
+\end{cases}\\
+&\Leftrightarrow L = \begin{bmatrix}
+1 & 0 & 0 & \dots & 0 \\
+-1/2 & 1 & 0 & \ddots & \vdots \\
+0 & -1/2 & 1 & \ddots & 0 \\
+\vdots & \ddots & \ddots & \ddots & 0 \\
+0 & \dots & 0 & -1/2 & 1
+\end{bmatrix} \quad \text{and} \quad U = \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+0 & 9/4 & -1 & \ddots & \vdots \\
+0 & 0 & 9/4 & \ddots & 0 \\
+\vdots & \ddots & 0 & 9/4 & -1 \\
+0 & \dots & 0 & 0 & 9/4
+\end{bmatrix}
+\end{aligned}
+$$
+- **Is the matrix A positive definite, or is it positive semi-definite?**
+
+The matrix **A** is positive definite if and only if the following conditions are satisfied:
+
+1. The matrix **A** is symmetric.
+2. The eigenvalues of the matrix **A** are all positive.
+
+The matrix **A** is symmetric since it is a tridiagonal matrix. The eigenvalues of the matrix **A** are all positive since the matrix **A** is a tridiagonal matrix with all its diagonal elements being positive. Therefore, the matrix **A** is positive definite.
+
+- **Write a Python script to solve a linear system associated with the above matrix.**
+
+The Python script to solve a linear system associated with the matrix **A** is given as follows:
+
+```{python}
+import numpy as np
+import scipy.linalg
+import scipy 
+
+# Define the size
+n = 5
+
+# Define the matrix A
+A = np.diag(2 * np.ones(n)) - np.diag(np.ones(n - 1), -1) - np.diag(np.ones(n - 1), 1)
+
+# Define the right-hand side vector b
+b = np.ones(n)
+
+# LU-factorization of the matrix A
+P, L, U = scipy.linalg.lu(A)
+
+# Solve the linear system
+x = np.linalg.solve(U, np.linalg.solve(L, b))
+
+# Print the solution
+print(x)
+
+# Print the residual
+print(np.linalg.norm(A @ x - b))
+
+# Print the determinant
+print(np.linalg.det(A))
+
+# Print the condition number
+print(np.linalg.cond(A))
+
+# Print the rank
+print(np.linalg.matrix_rank(A))
+
+# Print the eigenvalues
+print(np.linalg.eigvals(A))
+
+# Print the eigenvectors
+print(np.linalg.eig(A))
+
+# Print the inverse
+print(np.linalg.inv(A))
+
+# Print the pseudo-inverse
+print(np.linalg.pinv(A))
+```
+
+2. **[20 MARKS]** Consider the following boundary value problem modeling the heat flow in
+a long pipe:
+
+$$
+\begin{cases}
+y^{''}(x)- p(x)y^{'}(x)-q(x)y(x) = r(x), \quad x\in [a,b] \\
+y(a) = \alpha, \quad y(b) = \beta
+\end{cases}
+$$
+
+**(a) Use a uniform discretization of the interval $[a, b]$ to derive the linear system corresponding to the model problem.**
+
+The linear system corresponding to the model problem is derived as follows:
+
+Let $a = x_0 < x_1 < \dots < x_n = b$ be a uniform discretization of the interval $[a, b]$. The step size $h$ is given by:
+
+$$
+h = \frac{b - a}{n}
+$$
+
+The linear system corresponding to the model problem is given by:
+
+$$
+\begin{bmatrix}
+2 + h^2q(x_1) & -1 + \frac{h}{2}p(x_1) & 0 & \dots & 0 \\
+-1 - \frac{h}{2}p(x_2) & 2 + h^2q(x_2) & -1 + \frac{h}{2}p(x_2) & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 - \frac{h}{2}p(x_{n-1}) & 2 + h^2q(x_{n-1}) & -1 + \frac{h}{2}p(x_{n-1}) \\
+0 & \dots & 0 & -1 - \frac{h}{2}p(x_n) & 2 + h^2q(x_n)
+\end{bmatrix} \begin{bmatrix}
+y_1 \\
+y_2 \\
+\vdots \\   
+y_{n-1} \\
+y_n
+\end{bmatrix} = \begin{bmatrix}
+h^2r(x_1) + \alpha(1 + \frac{h}{2}p(x_1)) \\
+h^2r(x_2) \\
+\vdots \\
+h^2r(x_{n-1}) \\
+h^2r(x_n) + \beta(1 - \frac{h}{2}p(x_n))
+\end{bmatrix}
+$$
+
+
+**(b) Solve the linear system using the Gaussian elimination method.**
+
+The linear system is solved using the Gaussian elimination method as follows to find the solution $y(x)$:
+
+
+$$
+\begin{aligned}
+&\begin{bmatrix}
+2 + h^2q(x_1) & -1 + \frac{h}{2}p(x_1) & 0 & \dots & 0 \\
+-1 - \frac{h}{2}p(x_2) & 2 + h^2q(x_2) & -1 + \frac{h}{2}p(x_2) & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & -1 - \frac{h}{2}p(x_{n-1}) & 2 + h^2q(x_{n-1}) & -1 + \frac{h}{2}p(x_{n-1}) \\
+0 & \dots & 0 & -1 - \frac{h}{2}p(x_n) & 2 + h^2q(x_n)
+\end{bmatrix} \begin{bmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_{n-1} \\
+y_n
+\end{bmatrix} = \begin{bmatrix}
+h^2r(x_1) + \alpha(1 + \frac{h}{2}p(x_1)) \\
+h^2r(x_2) \\
+\vdots \\
+h^2r(x_{n-1}) \\
+h^2r(x_n) + \beta(1 - \frac{h}{2}p(x_n))
+\end{bmatrix} \\
+&\Leftrightarrow \begin{bmatrix}
+2 + h^2q(x_1) & -1 + \frac{h}{2}p(x_1) & 0 & \dots & 0 \\
+0 & \frac{(2 + h^2q(x_2))(2 + h^2q(x_1)) - (-1 + \frac{h}{2}p(x_2))(-1 - \frac{h}{2}p(x_1))}{2 + h^2q(x_1)} & \frac{(-1 + \frac{h}{2}p(x_2))(0) - (2 + h^2q(x_2))(-1 + \frac{h}{2}p(x_1))}{2 + h^2q(x_1)} & \ddots & \vdots \\
+0 & \ddots & \ddots & \ddots & 0 \\
+\vdots & \ddots & \frac{(2 + h^2q(x_{n-1}))(2 + h^2q(x_{n-2})) - (-1 + \frac{h}{2}p(x_{n-1}))(-1 - \frac{h}{2}p(x_{n-2}))}{2 + h^2q(x_{n-2})} & \frac{(-1 + \frac{h}{2}p(x_{n-1}))(0) - (2 + h^2q(x_{n-1}))(-1 + \frac{h}{2}p(x_{n-2}))}{2 + h^2q(x_{n-2})} & \frac{0}{2 + h^2q(x_{n-2})} \\
+0 & \dots & 0 & \frac{(2 + h^2q(x_n))(2 + h^2q(x_{n-1})) - (-1 + \frac{h}{2}p(x_n))(-1 - \frac{h}{2}p(x_{n-1}))}{2 + h^2q(x_{n-1})} & \frac{(-1 + \frac{h}{2}p(x_n))(0) - (2 + h^2q(x_n))(-1 + \frac{h}{2}p(x_{n-1}))}{2 + h^2q(x_{n-1})}
+\end{bmatrix} \begin{bmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_{n-1} \\
+y_n
+\end{bmatrix} &= \begin{bmatrix}
+h^2r(x_1) + \alpha(1 + \frac{h}{2}p(x_1)) \\
+\frac{h^2r(x_2)(2 + h^2q(x_1)) - h^2r(x_1)(-1 + \frac{h}{2}p(x_2))}{2 + h^2q(x_1)} \\
+\vdots \\
+\frac{h^2r(x_{n-1})(2 + h^2q(x_{n-2})) - h^2r(x_{n-2})(-1 + \frac{h}{2}p(x_{n-1}))}{2 + h^2q(x_{n-2})} \\
+h^2r(x_n) + \beta(1 - \frac{h}{2}p(x_n)) - \frac{h^2r(x_{n-1})(-1 + \frac{h}{2}p(x_n))}{2 + h^2q(x_{n-1})}
+\end{bmatrix} \\
+&\Leftrightarrow \begin{bmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_{n-1} \\
+y_n
+\end{bmatrix} = \begin{bmatrix}
+\frac{h^2r(x_1) + \alpha(1 + \frac{h}{2}p(x_1))}{2 + h^2q(x_1)} \\
+\frac{h^2r(x_2)(2 + h^2q(x_1)) - h^2r(x_1)(-1 + \frac{h}{2}p(x_2))}{(2 + h^2q(x_1))(2 + h^2q(x_2)) - (-1 + \frac{h}{2}p(x_2))(-1 - \frac{h}{2}p(x_1))} \\
+\vdots \\
+\frac{h^2r(x_{n-1})(2 + h^2q(x_{n-2})) - h^2r(x_{n-2})(-1 + \frac{h}{2}p(x_{n-1}))}{(2 + h^2q(x_{n-2}))(2 + h^2q(x_{n-1})) - (-1 + \frac{h}{2}p(x_{n-1}))(-1 - \frac{h}{2}p(x_{n-2}))} \\
+\frac{h^2r(x_n) + \beta(1 - \frac{h}{2}p(x_n)) - \frac{h^2r(x_{n-1})(-1 + \frac{h}{2}p(x_n))}{2 + h^2q(x_{n-1})}}{(2 + h^2q(x_{n-1}))(2 + h^2q(x_n)) - (-1 + \frac{h}{2}p(x_n))(-1 - \frac{h}{2}p(x_{n-1}))}
+\end{bmatrix}
+\end{aligned}
+$$
+
+- **(c) Solve the linear system using QR-factorization.**
+
+- Let's apply Gram-Schmidt to the columns of the matrix **A** to obtain vectors $q_1, q_2, \dots, q_n$ such that: 
+
+
+$$
+\begin{aligned}
+&\begin{cases}
+q_1 = \frac{a_1}{\|a_1\|} \\
+q_2 = \frac{a_2 - (q_1^Ta_2)q_1}{\|a_2 - (q_1^Ta_2)q_1\|} \\
+q_3 = \frac{a_3 - (q_1^Ta_3)q_1 - (q_2^Ta_3)q_2}{\|a_3 - (q_1^Ta_3)q_1 - (q_2^Ta_3)q_2\|} \\
+\vdots \\
+q_n = \frac{a_n - (q_1^Ta_n)q_1 - (q_2^Ta_n)q_2 - \dots - (q_{n-1}^Ta_n)q_{n-1}}{\|a_n - (q_1^Ta_n)q_1 - (q_2^Ta_n)q_2 - \dots - (q_{n-1}^Ta_n)q_{n-1}\|}
+\end{cases} \quad \text{where} \quad a_1, a_2, \dots, a_n \quad \text{are the columns of the matrix} \quad A\\
+\end{aligned}
+$$
+
+The norm of column vectors $a_1, a_2, \dots, a_n$ is given by:
+
+$$
+\begin{aligned}
+\begin{cases}
+\|a_1\| = \sqrt{a_1^Ta_1} \\
+\|a_2\| = \sqrt{a_2^Ta_2} \\
+\|a_3\| = \sqrt{a_3^Ta_3} \\
+\vdots \\
+\|a_n\| = \sqrt{a_n^Ta_n}
+\end{cases} &\Leftrightarrow \begin{cases}
+\|a_1\| = \sqrt{\sum_{i=1}^{n}a_{i1}^2} \\
+\|a_2\| = \sqrt{\sum_{i=1}^{n}a_{i2}^2} \\
+\|a_3\| = \sqrt{\sum_{i=1}^{n}a_{i3}^2} \\
+\vdots \\
+\|a_n\| = \sqrt{\sum_{i=1}^{n}a_{in}^2}
+\end{cases}\\ &\Leftrightarrow \begin{cases}
+\|a_1\| = \sqrt{(2 + h^2q(x_1))^{2}+ (-1 - \frac{h}{2}p(x_2))^2 + 0^2 + \dots + 0^2} \\
+\|a_2\| = \sqrt{(-1 +\frac{h}{2}p(x_{1}))^2 + (2+h^2 q(x_{2}))^2 + (-1 -\frac{h}{2}p(x_3))^2 + 0^2 +\dots + 0^2}\\
+\|a_3\| = \sqrt{0^2 + (-1 +\frac{h}{2}p(x_{2}))^2 + (2+h^2 q(x_{3}))^2 + (-1 -\frac{h}{2}p(x_4))^2 + 0^2 +\dots + 0^2}\\
+\vdots \\
+\|a_{n-1}\| = \sqrt{0^2 + 0^2 + (-1 +\frac{h}{2}p(x_{n-2}))^2 + (2+h^2 q(x_{n-1}))^2 + (-1 -\frac{h}{2}p(x_n))^2}\\
+\|a_n\| = \sqrt{0^2 + \dots + 0^2 + (-1 +\frac{h}{2}p(x_{n-1}))^2 + (2+h^2 q(x_n))^2}
+\end{cases}\\
+&\Leftrightarrow \begin{cases}
+\|a_1\| = \sqrt{(2 + h^2q(x_1))^{2}+ (-1 - \frac{h}{2}p(x_2))^2} \\
+\|a_2\| = \sqrt{(-1 +\frac{h}{2}p(x_{1}))^2 + (2+h^2 q(x_{2}))^2 + (-1 -\frac{h}{2}p(x_3))^2}\\
+\|a_3\| = \sqrt{(-1 +\frac{h}{2}p(x_{2}))^2 + (2+h^2 q(x_{3}))^2 + (-1 -\frac{h}{2}p(x_4))^2}\\
+\vdots \\
+\|a_{n-1}\| = \sqrt{(-1 +\frac{h}{2}p(x_{n-2}))^2 + (2+h^2 q(x_{n-1}))^2 + (-1 -\frac{h}{2}p(x_n))^2}\\
+\|a_n\| = \sqrt{(-1 +\frac{h}{2}p(x_{n-1}))^2 + (2+h^2 q(x_n))^2}
+\end{cases}
+\end{aligned}
+$$
+
+
+The vectors $q_1, q_2, \dots, q_n$ are given by:
+
+$$
+\begin{aligned}
+\begin{cases}
+q_1 = \frac{a_1}{\|a_1\|} \\
+q_2 = \frac{a_2 - (q_1^Ta_2)q_1}{\|a_2 - (q_1^Ta_2)q_1\|} \\
+q_3 = \frac{a_3 - (q_1^Ta_3)q_1 - (q_2^Ta_3)q_2}{\|a_3 - (q_1^Ta_3)q_1 - (q_2^Ta_3)q_2\|} \\
+\vdots \\
+q_n = \frac{a_n - (q_1^Ta_n)q_1 - (q_2^Ta_n)q_2 - \dots - (q_{n-1}^Ta_n)q_{n-1}}{\|a_n - (q_1^Ta_n)q_1 - (q_2^Ta_n)q_2 - \dots - (q_{n-1}^Ta_n)q_{n-1}\|}
+\end{cases} \quad \text{where} \quad a_1, a_2, \dots, a_n \quad \text{are the columns of the matrix} \quad A\\
+\begin{cases}
+q_1 = \frac{1}{\sqrt{(2 + h^2q(x_1))^{2}+ (-1 - \frac{h}{2}p(x_2))^2}}\begin{bmatrix}
+2 + h^2q(x_1) &
+-1 - \frac{h}{2}p(x_2) &
+0 &
+\cdots &
+0
+\end{bmatrix} ^{T}\\
+q_2 = \frac{1}{\sqrt{(-1 +\frac{h}{2}p(x_{1}))^2 + (2+h^2 q(x_{2}))^2 + (-1 -\frac{h}{2}p(x_3))^2}}\begin{bmatrix}
+-1 +\frac{h}{2}p(x_{1}) &
+2+h^2 q(x_{2}) &
+-1 -\frac{h}{2}p(x_3) &
+0 &
+\cdots &
+0
+\end{bmatrix}^{T} \\
+q_3 = \frac{1}{\sqrt{(-1 +\frac{h}{2}p(x_{2}))^2 + (2+h^2 q(x_{3}))^2 + (-1 -\frac{h}{2}p(x_4))^2}}\begin{bmatrix}
+0 &
+-1 +\frac{h}{2}p(x_{2}) &
+2+h^2 q(x_{3}) &
+-1 -\frac{h}{2}p(x_4) &
+0 &
+\cdots &
+0
+\end{bmatrix}^{T} \\
+\vdots \\
+q_n = \frac{1}{\sqrt{(-1 +\frac{h}{2}p(x_{n-1}))^2 + (2+h^2 q(x_n))^2}}\begin{bmatrix}
+0 &
+\cdots &
+0 &
+-1 +\frac{h}{2}p(x_{n-1}) &
+2+h^2 q(x_n)
+\end{bmatrix}^{T}
+\end{cases}
+\end{aligned}
+$$
+
+
+
+
+3. **[20 MARKS]** Solve the problem of fitting a polynomial $p(x)=\sum_{i=0}^{d}c_{i}x^{i-1}$ of degree d to data points $(x_{i}, y_{i})$, $i=1, ..., m$, in the plane by the method of normal equations and QR decomposition. Choose the degree
+of the polynomial to be d=5 and then d=15, choose the interval $x\in [-1, 1]$, discretize it using $N=10$ or $N=20$ points.
+
+Such polynomial fitting leads to the equation $Ac = y$, where $A$ is the Vandermonde matrix, $c$ is the vector of coefficients, and $y$ is the vector of data points. The normal equations are given by:
+
+$$
+A^{T}Ac = A^{T}y
+$$
+
+The solution to the normal equations is given by:
+
+$$
+c = (A^{T}A)^{-1}A^{T}y
+$$
+  By using the QR decomposition, the matrix $A^{T}A$ is factorized as follows:     
+  
+$$
+A^{T}A = QR
+$$
+
+where $Q$ is an orthogonal matrix and $R$ is an upper triangular matrix. The solution to the normal equations is given by:
+
+$$
+c = R^{-1}Q^{T}A^{T}y
+$$
+
+The Python script to solve the problem of fitting a polynomial $p(x)=\sum_{i=0}^{d}c_{i}x^{i-1}$ of degree $d$ to data points $(x_{i}, y_{i})$, $i=1, ..., m$, in the plane by the method of normal equations and QR decomposition is given as follows:
+
